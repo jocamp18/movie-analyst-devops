@@ -5,4 +5,4 @@ systemctl restart sshd
 
 dnf install git npm vim -y
 cd ~/
-git clone https://github.com/jocamp18/movie-analyst-devops
+git clone -b develop https://github.com/jocamp18/movie-analyst-devops

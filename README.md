@@ -58,6 +58,7 @@ Supporting branches
 ![arch_image]( ./doc/img/git-model.png)
 
 Watch it better at: https://app.creately.com/diagram/Ukr9r9XnHm4
+
 Read more at: https://nvie.com/posts/a-successful-git-branching-model/
 
 

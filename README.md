@@ -9,6 +9,7 @@ Clone the repo.
 Enter to the repo directory and execute vagran command to start the machines.
 
 `cd movie-anayst-devops`
+
 `vagrant up`
 
 Now the base machines will be available
@@ -18,11 +19,13 @@ Now the base machines will be available
  Enter to frontend machine with root user.
 
 `vagrant ssh frontend`
+
 `sudo su -`
 
 Enter to the repo directory. Go to scripts folder and execute the script fe-config.sh
 
 `cd movie-anayst-devops/scripts`
+
 `./fe-config.sh`
 
 ## Backend
@@ -30,9 +33,15 @@ Enter to the repo directory. Go to scripts folder and execute the script fe-conf
  Enter to backend machine with root user.
 
 `vagrant ssh backend`
+
 `sudo su -`
 
 Enter to the repo directory. Go to scripts folder and execute the script fe-config.sh
 
 `cd movie-anayst-devops/scripts`
+
 `./be-config.sh`
+
+## Git branching model
+
+![arch_image]( ./doc/img/git-model.png)

@@ -1,5 +1,6 @@
-# movie-analyst-devops
+# Movie-analyst-devops v0.1
 Automation of movie-analyst app deployment.
+
 ## Usage
 
 Clone the repo.

@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "frontend" do |node|
     node.vm.hostname = "frontend.local"
     node.vm.network "private_network", ip: "192.168.10.100"
-    node.vm.provision :shell, path: "scripts/fe-config.sh", privileged: true
+    node.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: true
     node.vm.provider "virtualbox" do |v|
       v.name = "frontend"
     end
@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "backend" do |node|
     node.vm.hostname = "backend.local"
     node.vm.network "private_network", ip: "192.168.10.101"
-    node.vm.provision :shell, path: "scripts/be-config.sh", privileged: true
+    node.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: true
     node.vm.provider "virtualbox" do |v|
       v.name = "bakend"
     end

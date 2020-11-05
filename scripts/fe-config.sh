@@ -1,13 +1,37 @@
 #!/usr/bin/env bash
 
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-systemctl restart sshd
-
-dnf install git npm vim -y
+# Cloning movie-analyst-ui from github
 cd ~/
-git clone https://github.com/jocamp18/movie-analyst-ui.git
+if [[ -d movie-analyst-ui ]]; then
+  git -C movie-analyst-ui pull
+else
+  git clone https://github.com/jocamp18/movie-analyst-ui.git
+fi
 cd movie-analyst-ui
+
+# Installing or updating prerequisites for the app
 npm install
 sudo npm install -g pm2
-pm2 start ecosystem.config.js
-crontab /vagrant/config-files/fe-cron
+
+# Starting app using pm2
+pm2Status=$(/usr/bin/node /usr/local/bin/pm2 status | grep movie-ui)
+if [[ -z "$pm2Status" ]]; then
+  /usr/bin/node /usr/local/bin/pm2 start ecosystem.config.js
+else
+  appStatus=$(echo $pm2Status | grep online)
+  if [[ -z "$appStatus" ]]; then
+    /usr/bin/node /usr/local/bin/pm2 restart ecosystem.config.js
+  else
+    echo "App already deployed"
+  fi
+fi
+
+# Adding cron to start app on reboot
+cronStatus=$(crontab -l)
+if [[ -z "$cronStatus" ]]; then
+  crontab ~/movie-analyst-devops/config-files/fe-cron
+else
+  echo "Crontab already added"
+fi
+
+echo "Configuration of UI have finished. Enjoy it!"

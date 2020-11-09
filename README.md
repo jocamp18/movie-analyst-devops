@@ -52,7 +52,7 @@ Main branches
 
 Supporting branches
 
-* Feature: This branch is used to introduce new charactristics to our app. The name of this kind of branches should start by "feat-". After the characteristic is ready, it should be merged with develop.
+* Feature: This branch is used to introduce new characteristics to our app. The name of this kind of branches should start by "feat-". After the characteristic is ready, it should be merged with develop.
 * Release: This branch is used to check the last details previous going to the production stage. The name of this kind of branches should start by "release-". After the realese is ready, it should be merged with develop and master.
 * Hotfix: This branch is used to solve a critical bug that was identified in the main branch. The name of this kind of branches should start by "hotfix-". When the bug is fixed, it should be merged with develop and main.
 

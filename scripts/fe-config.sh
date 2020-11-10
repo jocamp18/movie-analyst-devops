@@ -20,7 +20,11 @@ else
 fi
 
 npm install
-sudo npm install --prefix $pm2_dir pm2
+if [ $(ls $pm2_dir/pm2 2>/dev/null) ]; then
+  echo "pm2 already installed"
+else
+  sudo npm install -g pm2
+fi
 
 # Starting app using pm2
 pm2Status=$(node $pm2_dir/pm2 status | grep movie-ui)

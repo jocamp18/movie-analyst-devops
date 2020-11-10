@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# Cloning movie-analyst-ui from github
+pm2_dir=/usr/bin
+
+# Cloning movie-analyst-api from github
 cd ~/
 if [[ -d movie-analyst-api ]]; then
   git -C movie-analyst-api pull
@@ -10,17 +12,28 @@ fi
 cd movie-analyst-api
 
 # Installing or updating prerequisites for the app
+if [ $(node --version) ]; then
+  echo "npm already installed"
+else
+  curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+  sudo yum install nodejs -y
+fi
+
 npm install
-sudo npm install -g pm2
+if [ $(ls $pm2_dir/pm2 2>/dev/null) ]; then
+  echo "pm2 already installed"
+else
+  sudo npm install -g pm2
+fi
 
 # Starting app using pm2
-pm2Status=$(/usr/bin/node /usr/local/bin/pm2 status | grep movie-api)
+pm2Status=$(node $pm2_dir/pm2 status | grep movie-api)
 if [[ -z "$pm2Status" ]]; then
-  /usr/bin/node /usr/local/bin/pm2 start ecosystem.config.js
+  node $pm2_dir/pm2 start ecosystem.config.js
 else
   appStatus=$(echo $pm2Status | grep online)
   if [[ -z "$appStatus" ]]; then
-    /usr/bin/node /usr/local/bin/pm2 restart ecosystem.config.js
+    node $pm2_dir/pm2 restart ecosystem.config.js
   else
     echo "Api already deployed"
   fi
@@ -29,7 +42,7 @@ fi
 # Adding cron to start app on reboot
 cronStatus=$(crontab -l)
 if [[ -z "$cronStatus" ]]; then
-  crontab ~/movie-analyst-devops/config-files/be-cron
+  crontab $HOME/movie-analyst-devops/config-files/be-cron
 else
   echo "Crontab already added"
 fi

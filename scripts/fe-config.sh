@@ -14,13 +14,13 @@ npm install
 sudo npm install -g pm2
 
 # Starting app using pm2
-pm2Status=$(/usr/bin/node /usr/local/bin/pm2 status | grep movie-ui)
+pm2Status=$(/usr/bin/node /usr/bin/pm2 status | grep movie-ui)
 if [[ -z "$pm2Status" ]]; then
-  /usr/bin/node /usr/local/bin/pm2 start ecosystem.config.js
+  /usr/bin/node /usr/bin/pm2 start ecosystem.config.js
 else
   appStatus=$(echo $pm2Status | grep online)
   if [[ -z "$appStatus" ]]; then
-    /usr/bin/node /usr/local/bin/pm2 restart ecosystem.config.js
+    /usr/bin/node /usr/bin/pm2 restart ecosystem.config.js
   else
     echo "App already deployed"
   fi
@@ -29,7 +29,7 @@ fi
 # Adding cron to start app on reboot
 cronStatus=$(crontab -l)
 if [[ -z "$cronStatus" ]]; then
-  crontab ~/movie-analyst-devops/config-files/fe-cron
+  crontab $HOME/movie-analyst-devops/config-files/fe-cron
 else
   echo "Crontab already added"
 fi

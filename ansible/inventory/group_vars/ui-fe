@@ -1,0 +1,7 @@
+---
+
+movie_anayst_dir:         /movie-analyst/movie-analyst-ui
+movie_analyst_repo:       https://github.com/jocamp18/movie-analyst-ui.git
+pm2_dir:                  /usr/bin
+pm2_service_name:         movie-ui
+backend_host:             192.168.10.101

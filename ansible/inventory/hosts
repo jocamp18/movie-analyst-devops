@@ -1,0 +1,9 @@
+[ui-fe]
+frontend
+
+[api-be]
+backend
+
+[cluster:children]
+ui-fe
+api-be

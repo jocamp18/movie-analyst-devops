@@ -7,21 +7,42 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = BOX_IMAGE
 
-  config.vm.define "frontend" do |node|
-    node.vm.hostname = "frontend.local"
-    node.vm.network "private_network", ip: "192.168.10.100"
-    node.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: true
-    node.vm.provider "virtualbox" do |v|
+  config.vm.define "frontend" do |fe|
+    fe.vm.hostname = "frontend.local"
+    fe.vm.network "private_network", ip: "192.168.10.100"
+    fe.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: true
+    fe.vm.provider "virtualbox" do |v|
       v.name = "frontend"
     end
+    fe.vm.provision :ansible_local do |ansible|
+      ansible.config_file       = "ansible/ansible.cfg"
+      ansible.playbook          = "ansible/site.yml"
+      ansible.inventory_path    = "ansible/inventory"
+      ansible.become            = true
+      ansible.verbose           = "vv"
+      ansible.extra_vars       = {
+        machine: "frontend",
+      }
+    end
+    
   end
 
-  config.vm.define "backend" do |node|
-    node.vm.hostname = "backend.local"
-    node.vm.network "private_network", ip: "192.168.10.101"
-    node.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: true
-    node.vm.provider "virtualbox" do |v|
+  config.vm.define "backend" do |be|
+    be.vm.hostname = "backend.local"
+    be.vm.network "private_network", ip: "192.168.10.101"
+    be.vm.provision :shell, path: "scripts/bootstrap.sh", privileged: true
+    be.vm.provider "virtualbox" do |v|
       v.name = "bakend"
+    end
+    be.vm.provision :ansible_local do |ansible|
+      ansible.config_file       = "ansible/ansible.cfg"
+      ansible.playbook          = "ansible/site.yml"
+      ansible.inventory_path    = "ansible/inventory"
+      ansible.become            = true
+      ansible.verbose           = "vv"
+      ansible.extra_vars       = {
+        machine: "backend",
+      }
     end
   end
 

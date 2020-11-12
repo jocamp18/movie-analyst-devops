@@ -1,0 +1,40 @@
+---
+- hosts: cluster
+  tasks:
+  - name: "Creating Movie Analyst dir"
+    file:
+      path: "{{ movie_anayst_dir }}"
+      state: directory
+      mode: 0750
+  
+  - name: "Clone repository"
+    git:
+      repo: "{{ movie_analyst_repo }}"
+      clone: yes
+      update: yes
+      dest: "{{ movie_analyst_dir }}"
+  
+  - name: "Add npm repository"
+    yum_repository:
+      name: NodeSource
+      baseurl: https://rpm.nodesource.com/setup_10.x
+  
+  - name: "Install nodejs"
+    yum:
+      name: nodejs
+      state: latest
+  
+  - name: "Install pm2 with npm"
+    community.general.npm:
+      name: pm2
+      path: "{{ pm2_dir }}"
+      global: yes
+      
+  - name: "Install dependencies of Movie Analyst"
+    community.general.npm:
+      path: "{{ movie_analyst_dir }}"
+  
+  - name: "Copy ecosystem configuration file"
+    template:
+      src: "ecosystem.config.js.j2"
+      dest: "{{ movie_analyst_dir }}/ecosystem.config.js"

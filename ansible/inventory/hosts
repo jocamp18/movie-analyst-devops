@@ -1,9 +1,9 @@
-[ui-fe]
-frontend
+[uife]
+frontend          ansible_connection=local
 
-[api-be]
-backend
+[apibe]
+backend           ansible_connection=local
 
 [cluster:children]
-ui-fe
-api-be
+uife
+apibe

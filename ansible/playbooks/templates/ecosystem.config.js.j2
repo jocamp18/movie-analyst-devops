@@ -1,9 +1,9 @@
 module.exports = {
   apps: [{
     name: "{{ pm2_service_name }}",
-    script: "./server.js",
+    script: "{{ pm2_script }}",
     env: {
-      BACK_HOST: "{{ backend_host }}"
+      "{{ pm2_env1_var }}": "{{ pm2_env1_value }}"
     }
   }]
 }

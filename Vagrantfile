@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
       ansible.become            = true
       ansible.verbose           = "vv"
       ansible.extra_vars       = {
-        machine: "frontend",
+        ansible_group: "uife",
       }
     end
     
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
       ansible.become            = true
       ansible.verbose           = "vv"
       ansible.extra_vars       = {
-        machine: "backend",
+        ansible_group: "apibe",
       }
     end
   end

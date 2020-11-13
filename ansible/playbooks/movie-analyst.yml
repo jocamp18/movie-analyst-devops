@@ -25,6 +25,11 @@
       name: pm2
       global: yes
       
+  - name: "Install ejs with npm"
+    npm:
+      name: ejs
+      global: yes
+      
   - name: "Install dependencies of Movie Analyst"
     npm:
       path: "{{ movie_analyst_dir }}"

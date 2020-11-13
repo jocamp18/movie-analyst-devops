@@ -1,0 +1,7 @@
+---
+movie_analyst_root_dir:   /movie-analyst
+movie_analyst_dir:        "{{ movie_analyst_root_dir }}/movie-analyst-api"
+movie_analyst_repo:       https://github.com/jocamp18/movie-analyst-api.git
+pm2_service_name:         movie-api
+pm2_env1_var:             PORT
+pm2_env1_value:           3000

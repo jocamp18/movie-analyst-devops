@@ -13,35 +13,7 @@ Enter to the repo directory and execute vagran command to start the machines.
 
 `vagrant up`
 
-Now the base machines will be available
-
-## Frontend
-
- Enter to frontend machine with root user.
-
-`vagrant ssh frontend`
-
-`sudo su -`
-
-Enter to the repo directory. Go to scripts folder and execute the script fe-config.sh
-
-`cd movie-anayst-devops/scripts`
-
-`./fe-config.sh`
-
-## Backend
-
- Enter to backend machine with root user.
-
-`vagrant ssh backend`
-
-`sudo su -`
-
-Enter to the repo directory. Go to scripts folder and execute the script fe-config.sh
-
-`cd movie-anayst-devops/scripts`
-
-`./be-config.sh`
+Now the base machines will be available and the UI will be working on a virtual machine called frontend and the API on a virtual machine called backend.
 
 ## Git branching model
 

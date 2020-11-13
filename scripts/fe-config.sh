@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pm2_dir=/usr/bin
+pm2_dir=/usr/local/bin
 
 # Cloning movie-analyst-ui from github
 cd ~/

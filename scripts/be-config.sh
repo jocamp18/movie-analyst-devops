@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pm2_dir=/usr/bin
+pm2_dir=/usr/local/bin
 
 # Cloning movie-analyst-api from github
 cd ~/
@@ -23,7 +23,7 @@ npm install
 if [ $(ls $pm2_dir/pm2 2>/dev/null) ]; then
   echo "pm2 already installed"
 else
-  sudo npm install -g pm2
+  sudo npm install -g pm2 
 fi
 
 # Starting app using pm2

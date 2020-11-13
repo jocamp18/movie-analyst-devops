@@ -28,6 +28,7 @@
   - name: "Install dependencies of Movie Analyst"
     npm:
       path: "{{ movie_analyst_dir }}"
+    ignore_errors: yes
   
   - name: "Copy ecosystem configuration file"
     template:

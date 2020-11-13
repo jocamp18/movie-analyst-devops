@@ -46,7 +46,7 @@
     when: ma_exists.rc == 0
 
   - name: "Start pm2 MA service"
-    command: node {{ pm2_dir }}/pm2 start {{ movie_analyst_dir }}/ecosystem.config.js
+    command: node {{ pm2_dir }}/pm2 start {{ movie_analyst_root_dir }}/ecosystem.config.js
     when: ma_exists != 0 or ma_status.rc != 0
 
   - name: "Creates pm2 cron on @reboot"

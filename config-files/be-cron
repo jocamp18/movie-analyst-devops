@@ -1,1 +1,1 @@
-@reboot sleep 5 && cd /root/movie-analyst-api && /usr/bin/node /usr/local/bin/pm2 start ecosystem.config.js
+@reboot sleep 5 && cd $HOME/movie-analyst-api && node /usr/bin/pm2 start ecosystem.config.js

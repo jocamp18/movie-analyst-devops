@@ -1,0 +1,3 @@
+---
+pm2_dir:                  /usr/local/bin
+pm2_script:               "{{ movie_analyst_dir }}/server.js"

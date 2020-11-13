@@ -1,0 +1,9 @@
+[uife]
+frontend          ansible_connection=local
+
+[apibe]
+backend           ansible_connection=local
+
+[cluster:children]
+uife
+apibe

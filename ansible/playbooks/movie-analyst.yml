@@ -1,0 +1,62 @@
+---
+- hosts: "{{ ansible_group }}"
+  tasks:
+  - name: "Creating Movie Analyst dir"
+    file:
+      path: "{{ movie_analyst_dir }}"
+      state: directory
+      mode: 0750
+  
+  - name: "Clone repository"
+    git:
+      repo: "{{ movie_analyst_repo }}"
+      clone: yes
+      update: yes
+      force: yes
+      dest: "{{ movie_analyst_dir }}"
+  
+  - name: "Install nodejs"
+    yum:
+      name: nodejs
+      state: latest
+  
+  - name: "Install pm2 with npm"
+    npm:
+      name: pm2
+      global: yes
+      
+  - name: "Install ejs with npm"
+    npm:
+      name: ejs
+      global: yes
+      
+  - name: "Install dependencies of Movie Analyst"
+    npm:
+      path: "{{ movie_analyst_dir }}"
+    ignore_errors: yes
+  
+  - name: "Copy ecosystem configuration file"
+    template:
+      src: "ecosystem.config.js.j2"
+      dest: "{{ movie_analyst_root_dir }}/ecosystem.config.js"
+
+  - name: "Checking if pm2 MA service exists"
+    command: node {{ pm2_dir }}/pm2 status | grep {{ pm2_service_name }}
+    ignore_errors: yes
+    register: ma_exists
+
+  - name: "Checking pm2 MA service status"
+    command: echo ma_exists.stdout | grep online
+    ignore_errors: yes
+    register: ma_status
+    when: ma_exists.rc == 0
+
+  - name: "Start pm2 MA service"
+    command: node {{ pm2_dir }}/pm2 start {{ movie_analyst_root_dir }}/ecosystem.config.js
+    when: ma_exists != 0 or ma_status.rc != 0
+
+  - name: "Creates pm2 cron on @reboot"
+    cron:
+      name: "Start pm2 MA service"
+      special_time: reboot
+      job: node {{ pm2_dir }}/pm2 start {{ movie_analyst_root_dir}}/ecosystem.config.js

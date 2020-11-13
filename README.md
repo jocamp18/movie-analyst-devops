@@ -1,4 +1,4 @@
-# Movie-analyst-devops v0.1
+# Movie-analyst-devops v0.2
 Automation of movie-analyst app deployment.
 
 ## Usage
@@ -13,35 +13,7 @@ Enter to the repo directory and execute vagran command to start the machines.
 
 `vagrant up`
 
-Now the base machines will be available
-
-## Frontend
-
- Enter to frontend machine with root user.
-
-`vagrant ssh frontend`
-
-`sudo su -`
-
-Enter to the repo directory. Go to scripts folder and execute the script fe-config.sh
-
-`cd movie-anayst-devops/scripts`
-
-`./fe-config.sh`
-
-## Backend
-
- Enter to backend machine with root user.
-
-`vagrant ssh backend`
-
-`sudo su -`
-
-Enter to the repo directory. Go to scripts folder and execute the script fe-config.sh
-
-`cd movie-anayst-devops/scripts`
-
-`./be-config.sh`
+Now the base machines will be available and the UI will be working on a virtual machine called frontend and the API on a virtual machine called backend.
 
 ## Git branching model
 
@@ -52,7 +24,7 @@ Main branches
 
 Supporting branches
 
-* Feature: This branch is used to introduce new charactristics to our app. The name of this kind of branches should start by "feat-". After the characteristic is ready, it should be merged with develop.
+* Feature: This branch is used to introduce new characteristics to our app. The name of this kind of branches should start by "feat-". After the characteristic is ready, it should be merged with develop.
 * Release: This branch is used to check the last details previous going to the production stage. The name of this kind of branches should start by "release-". After the realese is ready, it should be merged with develop and master.
 * Hotfix: This branch is used to solve a critical bug that was identified in the main branch. The name of this kind of branches should start by "hotfix-". When the bug is fixed, it should be merged with develop and main.
 

@@ -1,4 +1,4 @@
-# Movie-analyst-devops v0.2
+# Movie-analyst-devops v1.0
 Automation of movie-analyst app deployment.
 
 ## Usage

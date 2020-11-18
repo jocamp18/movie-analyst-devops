@@ -32,7 +32,7 @@ data "aws_ami" "tf-ui-ami" {
 
   filter {
     name = "name"
-    values= ["ma-ui-ami"]
+    values= ["tf-ui-ami"]
   }
 }
 
@@ -101,7 +101,7 @@ resource "aws_lb_listener" "tf-ui-l" {
 
 resource "aws_launch_template" "tf-ui-t" {
   name          = "tf-ui-t"
-  image_id      = "ami-0d235e350d591e7fe"
+  image_id      = data.aws_ami.tf-ui-ami.id
   instance_type = "t2.micro"
   key_name = "ramp-up-devops-jdog"
   
@@ -162,7 +162,7 @@ data "aws_ami" "tf-api-ami" {
 
   filter {
     name = "name"
-    values= ["ma-api-ami"]
+    values= ["tf-api-ami"]
   }
 }
 

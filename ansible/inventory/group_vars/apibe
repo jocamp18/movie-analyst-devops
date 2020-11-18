@@ -1,5 +1,4 @@
 ---
-movie_analyst_root_dir:   /movie-analyst
 movie_analyst_dir:        "{{ movie_analyst_root_dir }}/movie-analyst-api"
 movie_analyst_repo:       https://github.com/jocamp18/movie-analyst-api.git
 pm2_service_name:         movie-api

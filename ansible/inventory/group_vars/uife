@@ -1,7 +1,6 @@
 ---
-movie_analyst_root_dir:   /movie-analyst
 movie_analyst_dir:        "{{ movie_analyst_root_dir }}/movie-analyst-ui"
 movie_analyst_repo:       https://github.com/jocamp18/movie-analyst-ui.git
 pm2_service_name:         movie-ui
 pm2_env1_var:             BACK_HOST
-pm2_env1_value:           192.168.10.101
+pm2_env1_value:           tf-api-lb-8681c8039e96a28d.elb.us-west-1.amazonaws.com

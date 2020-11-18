@@ -2,5 +2,5 @@
 pm2_dir:                  /usr/local/bin
 pm2_script:               "{{ movie_analyst_dir }}/server.js"
 movie_analyst_root_dir:   /usr/movie-analyst
-ma_devops_dir:            {{ movie_analyst_root_dir }}/movie-analyst-devops
+ma_devops_dir:            "{{ movie_analyst_root_dir }}/movie-analyst-devops"
 ma_devops_repo:           https://github.com/jocamp18/movie-analyst-devops

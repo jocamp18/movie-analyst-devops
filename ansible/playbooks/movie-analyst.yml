@@ -77,6 +77,7 @@
   - name: "Creates Ansible cron on @reboot"
     cron:
       name: "Run ansible on reboot"
+      user: root
       special_time: reboot
       job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }}" {{ ma_devops_dir }}/ansible/site.yml
       cron_file: ansible_run
@@ -84,6 +85,7 @@
   - name: "Creates Ansible cron every 30 minutes"
     cron:
       name: "Run ansible every 30 minutes"
+      user: root
       minute: "*/30"
       job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }}" {{ ma_devops_dir }}/ansible/site.yml
       cron_file: ansible_run

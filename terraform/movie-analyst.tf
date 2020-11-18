@@ -101,7 +101,7 @@ resource "aws_lb_listener" "tf-ui-l" {
 
 resource "aws_launch_template" "tf-ui-t" {
   name          = "tf-ui-t"
-  image_id      = data.aws_ami.tf-ui-ami.id
+  image_id      = "ami-000279759c4819ddf"
   instance_type = "t2.micro"
   key_name = "ramp-up-devops-jdog"
   

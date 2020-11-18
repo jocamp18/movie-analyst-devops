@@ -5,4 +5,8 @@ systemctl restart sshd
 
 dnf install git npm vim -y
 cd ~/
-git clone -b develop https://github.com/jocamp18/movie-analyst-devops
+if [[ -d movie-analyst-devops ]]; then
+  git -C movie-analyst-devops pull
+else
+  git clone -b feat-ansible https://github.com/jocamp18/movie-analyst-devops
+fi

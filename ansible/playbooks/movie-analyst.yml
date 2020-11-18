@@ -7,13 +7,21 @@
       state: directory
       mode: 0750
   
-  - name: "Clone repository"
+  - name: "Clone ma repository"
     git:
       repo: "{{ movie_analyst_repo }}"
       clone: yes
       update: yes
       force: yes
       dest: "{{ movie_analyst_dir }}"
+  
+  - name: "Clone ma-devops repository"
+    git:
+      repo: "{{ ma_devops_repo }}"
+      clone: yes
+      update: yes
+      force: yes
+      dest: "{{ ma_devops_dir }}"
   
   - name: "Install nodejs"
     yum:
@@ -39,6 +47,7 @@
     template:
       src: "ecosystem.config.js.j2"
       dest: "{{ movie_analyst_root_dir }}/ecosystem.config.js"
+    register: ecosystem_config_file
 
   - name: "Checking if pm2 MA service exists"
     command: node {{ pm2_dir }}/pm2 status | grep {{ pm2_service_name }}
@@ -51,6 +60,10 @@
     register: ma_status
     when: ma_exists.rc == 0
 
+  - name: "Restart pm2 MA service"
+    command: node {{ pm2_dir }}/pm2 restart {{ movie_analyst_root_dir }}/ecosystem.config.js
+    when: ecosystem_config_file.changed and ma_status.rc == 0
+
   - name: "Start pm2 MA service"
     command: node {{ pm2_dir }}/pm2 start {{ movie_analyst_root_dir }}/ecosystem.config.js
     when: ma_exists != 0 or ma_status.rc != 0
@@ -60,3 +73,17 @@
       name: "Start pm2 MA service"
       special_time: reboot
       job: node {{ pm2_dir }}/pm2 start {{ movie_analyst_root_dir}}/ecosystem.config.js
+  
+  - name: "Creates Ansible cron on @reboot"
+    cron:
+      name: "Run ansible on reboot"
+      special_time: reboot
+      job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }}" {{ ma_devops_dir }}/ansible/site.yml
+      cron_file: ansible_run
+
+  - name: "Creates Ansible cron every 30 minutes"
+    cron:
+      name: "Run ansible every 30 minutes"
+      minute: "*/30"
+      job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }}" {{ ma_devops_dir }}/ansible/site.yml
+      cron_file: ansible_run

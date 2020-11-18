@@ -25,7 +25,7 @@
   
   - name: "Enable nodejs module in Centos 8"
     shell: curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-    when: os_version == '8'
+    when: os_version == 'amz'
 
   - name: "Install nodejs"
     yum:

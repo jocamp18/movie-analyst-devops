@@ -110,6 +110,8 @@ resource "aws_launch_template" "tf-ui-t" {
     security_groups             = [aws_security_group.tf-ui-sg.id]
   }
 
+  user_data = filebase64("${path.module}/fe-bootstrap.sh")
+
   tag_specifications {
     resource_type = "instance"
     tags = {
@@ -238,6 +240,8 @@ resource "aws_launch_template" "tf-api-t" {
     associate_public_ip_address = true
     security_groups             = [aws_security_group.tf-api-sg.id]
   }
+
+  user_data = filebase64("${path.module}/be-bootstrap.sh")
 
   tag_specifications {
     resource_type = "instance"

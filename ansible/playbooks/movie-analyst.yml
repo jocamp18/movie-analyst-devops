@@ -23,6 +23,10 @@
       force: yes
       dest: "{{ ma_devops_dir }}"
   
+  - name: "Enable nodejs module in Centos 8"
+    shell: curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+    when: os_version == '8'
+
   - name: "Install nodejs"
     yum:
       name: nodejs
@@ -50,7 +54,7 @@
     register: ecosystem_config_file
 
   - name: "Checking if pm2 MA service exists"
-    command: node {{ pm2_dir }}/pm2 status | grep {{ pm2_service_name }}
+    command: node {{ pm2_dir }}/pm2 info {{ pm2_service_name }}
     ignore_errors: yes
     register: ma_exists
 
@@ -79,7 +83,7 @@
       name: "Run ansible on reboot"
       user: root
       special_time: reboot
-      job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }}" {{ ma_devops_dir }}/ansible/site.yml >> /var/log/ansible_run.log
+      job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }} os_version={{ os_version }}" {{ ma_devops_dir }}/ansible/site.yml >> /var/log/ansible_run.log
       cron_file: ansible_run
 
   - name: "Creates Ansible cron every 30 minutes"
@@ -87,5 +91,5 @@
       name: "Run ansible every 30 minutes"
       user: root
       minute: "*/30"
-      job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }}" {{ ma_devops_dir }}/ansible/site.yml >> /var/log/ansible_run.log
+      job: ansible-playbook -i {{ ma_devops_dir }}/ansible/inventory -e "ansible_group={{ ansible_group }} os_version={{ os_version }}" {{ ma_devops_dir }}/ansible/site.yml >> /var/log/ansible_run.log
       cron_file: ansible_run

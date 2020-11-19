@@ -25,7 +25,7 @@
   
   - name: "Enable nodejs module in Centos 8"
     shell: curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-    when: os_version == '8'
+    when: os_version == 'amz'
 
   - name: "Install nodejs"
     yum:
@@ -62,15 +62,14 @@
     command: echo ma_exists.stdout | grep online
     ignore_errors: yes
     register: ma_status
-    when: ma_exists.rc == 0
 
   - name: "Restart pm2 MA service"
     command: node {{ pm2_dir }}/pm2 restart {{ movie_analyst_root_dir }}/ecosystem.config.js
-    when: ecosystem_config_file.changed and ma_status.rc == 0
+    when: ecosystem_config_file.changed and ma_status.rc != 0
 
   - name: "Start pm2 MA service"
     command: node {{ pm2_dir }}/pm2 start {{ movie_analyst_root_dir }}/ecosystem.config.js
-    when: ma_exists.rc != 0 or ma_status.rc != 0
+    when: ma_exists.rc != 0
 
   - name: "Creates pm2 cron on @reboot"
     cron:

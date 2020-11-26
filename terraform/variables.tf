@@ -23,14 +23,22 @@ variable "be_port" {
   default     = "3000"
 }
 
+variable "tags" {
+  type    = map(string)
+  default = {
+    responsible: "Diego.OcampoG",
+    project: "ramp-up-devops"
+  }
+}
+
 variable "responsible_tag" {
-  description = "Responsible tag"
-  default     = "Diego.OcampoG"
+  description = "Project tag"
+  default =  "Diego.OcampoG"
 }
 
 variable "project_tag" {
   description = "Project tag"
-  default     = "ramp-up-devops"
+  default =  "ramp-up-devops"
 }
 
 variable "subnet_public0" {

@@ -28,11 +28,12 @@ resource "aws_security_group" "tf-ui-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "tf-ui-sg"
-    responsible = var.responsible_tag
-    project = var.project_tag
-  }
+  tags = merge(
+    var.tags,
+    {
+      Name = "tf-ui-sg"
+    }
+  )
 }
 
 resource "aws_lb_target_group" "tf-ui-tg" {
@@ -48,10 +49,7 @@ resource "aws_lb" "tf-ui-lb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.tf-ui-sg.id]
   subnets            = [var.subnet_public0, var.subnet_public1]
-  tags = {
-    responsible = var.responsible_tag
-    project = var.project_tag
-  }
+  tags =  var.tags
 }
 
 resource "aws_lb_listener" "tf-ui-l" {
@@ -80,18 +78,12 @@ resource "aws_launch_template" "tf-ui-t" {
 
   tag_specifications {
     resource_type = "instance"
-    tags = {
-      responsible = var.responsible_tag
-      project = var.project_tag
-    }
+    tags = var.tags
   }
 
   tag_specifications {
     resource_type = "volume"
-    tags = {
-      responsible = var.responsible_tag
-      project = var.project_tag
-    }
+    tags = var.tags
   }
 }
 
@@ -150,11 +142,12 @@ resource "aws_security_group" "tf-api-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "tf-api-sg"
-    responsible = var.responsible_tag
-    project = var.project_tag
-  }
+  tags = merge(
+    var.tags,
+    {
+      Name = "tf-api-sg"
+    }
+  )
 }
 
 resource "aws_lb_target_group" "tf-api-tg" {
@@ -169,10 +162,7 @@ resource "aws_lb" "tf-api-lb" {
   internal           = true
   load_balancer_type = "network"
   subnets            = [var.subnet_private0, var.subnet_private1]
-  tags = {
-    responsible = var.responsible_tag
-    project = var.project_tag
-  }
+  tags = var.tags
 }
 
 resource "aws_lb_listener" "tf-api-l" {
@@ -201,18 +191,12 @@ resource "aws_launch_template" "tf-api-t" {
 
   tag_specifications {
     resource_type = "instance"
-    tags = {
-      responsible = var.responsible_tag
-      project = var.project_tag
-    }
+    tags = var.tags
   }
 
   tag_specifications {
     resource_type = "volume"
-    tags = {
-      responsible = var.responsible_tag
-      project = var.project_tag
-    }
+    tags = var.tags
   }
 }
 
